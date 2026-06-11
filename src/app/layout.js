@@ -41,7 +41,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="min-h-screen flex flex-col">
-        <header className="border-b bg-white">
+        <header className="border-b bg-black">
           <nav className="max-w-5xl mx-auto flex items-center justify-between p-4">
             <Link href="/" className="font-bold text-xl">Mctaba</Link>
             <div className="flex gap-6">
