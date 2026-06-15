@@ -31,6 +31,7 @@
 // app/layout.js
 import "./globals.css";
 import Link from "next/link";
+import CartIndicator from "./components/CartIndicator";
 
 export const metadata = {
   title: "Mctaba Shop",
@@ -45,10 +46,16 @@ export default function RootLayout({ children }) {
           <nav className="max-w-5xl mx-auto flex items-center justify-between p-4">
             <Link href="/" className="font-bold text-xl">Mctaba</Link>
             <div className="flex gap-6">
+              <Link href="/products/category/phones">Phones</Link>
+              <Link href="/about">About</Link>
+              <Link href="/contact">Contact</Link>
+              <CartIndicator />
+            </div>
+            {/* <div className="flex gap-6">
               <Link href="/products/phones">Phones</Link>
               <Link href="/about">About</Link>
               <Link href="/contact">Contact</Link>
-            </div>
+            </div> */}
           </nav>
         </header>
 
