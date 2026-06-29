@@ -2,14 +2,13 @@
 import Link from "next/link";
 import { query } from "@/lib/db";
 import { requireAdmin } from "@/app/actions/auth";
-import ProgressBar from "@/app/checkout/ProgressBar";
 
 export const metadata = { title: "Orders | Admin" };
 
 export default async function AdminOrdersPage({ searchParams }) {
   await requireAdmin();
 
-  const status = searchParams.status || "";
+  const {status = ""} = await searchParams || "";
   const params = [];
   let where = "";
   if (status) {

@@ -1,7 +1,8 @@
 // app/admin/orders/[id]/StatusUpdater.js
 "use client";
 import { useState, useTransition } from "react";
-import { updateOrderStatus } from "@/app/actions/orders";
+// import { updateOrderStatus } from "@/app/actions/orders";
+import { updateOrderStatus } from "@/app/actions/order";
 
 const TRANSITIONS = {
   pending: ["paid", "cancelled"],

@@ -62,17 +62,38 @@ export default function PaymentForm() {
     setSubmitting(true);
     setPaymentMethod(method);
 
-    const formData = new FormData();
-    formData.append("name", info.name);
-    const {OrderId} = await createOrder(formData);
-    // Day 3 we call a Server Action here. For today, fake it.
-    await new Promise((r) => setTimeout(r, 1200));
-    const fakeOrderId = `ORD-${Date.now().toString().slice(-6)}`;
-    setOrderId(fakeOrderId);
+    const result = await createOrder({
+      customer: info,
+      items: items.map((i) => ({ id: i.id, quantity: i.quantity })),
+      paymentMethod: method,
+    });
+
+    if (result.error) {
+      alert(result.error);
+      setSubmitting(false);
+      return;
+    }
+
+    setOrderId(result.orderId);
     clearCart();
     goTo(STATES.CONFIRMED);
     router.push("/checkout/confirmed");
   }
+  // async function handlePay() {
+  //   setSubmitting(true);
+  //   setPaymentMethod(method);
+
+  //   const formData = new FormData();
+  //   formData.append("name", info.name);
+  //   const {OrderId} = await createOrder(formData);
+  //   // Day 3 we call a Server Action here. For today, fake it.
+  //   await new Promise((r) => setTimeout(r, 1200));
+  //   const fakeOrderId = `ORD-${Date.now().toString().slice(-6)}`;
+  //   setOrderId(fakeOrderId);
+  //   clearCart();
+  //   goTo(STATES.CONFIRMED);
+  //   router.push("/checkout/confirmed");
+  // }
 
   if (!hydrated) return <p>Loading...</p>;
 

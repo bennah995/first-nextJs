@@ -4,9 +4,10 @@ import StatusUpdater from "./StatusUpdater";
 import { notFound } from "next/navigation";
 
 export default async function AdminOrderDetail({ params }) {
+  const {id} = await params;
   await requireAdmin();
 
-  const { rows } = await query("SELECT * FROM orders WHERE id = $1", [params.id]);
+  const { rows } = await query("SELECT * FROM orders WHERE id = $1", [id]);
   const order = rows[0];
   if (!order) notFound();
 
@@ -14,7 +15,7 @@ export default async function AdminOrderDetail({ params }) {
     `SELECT oi.quantity, oi.price_cents_at_purchase, p.name, p.slug
      FROM order_items oi JOIN products p ON p.id = oi.product_id
      WHERE oi.order_id = $1`,
-    [params.id]
+    [id]
   );
 
   return (

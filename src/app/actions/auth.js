@@ -39,7 +39,15 @@ export async function loginAction(prevState, formData) {
     { expiresIn: "8h" }
   );
 
-  cookies().set("admin_token", token, {
+  // cookies().set("admin_token", token, {
+  //   httpOnly: true,
+  //   secure: process.env.NODE_ENV === "production",
+  //   sameSite: "lax",
+  //   path: "/",
+  //   maxAge: 60 * 60 * 8,
+  // });
+
+  (await cookies()).set("admin_token", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
@@ -56,7 +64,7 @@ export async function logoutAction() {
 }
 
 export async function requireAdmin() {
-  const token = cookies().get("admin_token")?.value;
+  const token = (await cookies()).get("admin_token")?.value;
   if (!token) redirect("/admin/login");
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
