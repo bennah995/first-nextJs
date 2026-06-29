@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import { useCart } from "@/app/lib/cartStore";
+import { useCheckout } from "@/app/lib/checkoutStore";
 import { useEffect, useState } from "react";
 
 export default function CartView() {
@@ -10,9 +11,16 @@ export default function CartView() {
   const totalCents = useCart((s) => s.totalCents());
   const setQuantity = useCart((s) => s.setQuantity);
   const removeItem = useCart((s) => s.removeItem);
+  const goTo = useCheckout((s) => s.goTo);
+  const STATES = useCheckout((s) => s.STATES);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => setHydrated(true), []);
+
+  useEffect(() => {
+    if (!hydrated || items.length === 0) return;
+    goTo(STATES.CART);
+  }, [hydrated, items.length, goTo, STATES]);
 
   if (!hydrated) return <p>Loading...</p>;
 
